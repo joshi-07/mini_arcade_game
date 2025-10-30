@@ -109,6 +109,12 @@ function startRound() {
 
 // click handler
 box.addEventListener('click', () => {
+  if (nameInput.value.trim() === '') {
+    alert('Please enter your name to play!');
+    hint.innerText = 'Please enter your name to play!';
+    return;
+  }
+
   if (counting && !waiting) {
     // clicked too early during countdown
     clearTimeout(timeoutId);

@@ -94,6 +94,12 @@ function selectAnswer(selectedIndex) {
 }
 
 function startGame() {
+  if (nameInput.value.trim() === '') {
+    alert('Please enter your name to start the quiz!');
+    hint.textContent = 'Please enter your name to start the quiz!';
+    return;
+  }
+
   gameActive = true;
   currentQuestion = 0;
   score = 0;

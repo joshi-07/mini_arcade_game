@@ -104,6 +104,12 @@ function isSolved() {
 }
 
 function startGame() {
+  if (nameInput.value.trim() === '') {
+    alert('Please enter your name to start the game!');
+    hint.textContent = 'Please enter your name to start the game!';
+    return;
+  }
+
   gameActive = true;
   startTime = Date.now();
   result.textContent = '';
@@ -135,4 +141,4 @@ function endGame() {
 restartBtn.addEventListener('click', startGame);
 
 // Initialize
-startGame();
+// Do not start game automatically
