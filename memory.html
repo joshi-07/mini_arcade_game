@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Memory Matching — Mini Game Arcade</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body class="pb-body game-page">
+  <main class="wrap">
+    <header class="hero small">
+      <h1 class="brand">Memory Matching</h1>
+      <p class="lead">Flip cards to find matching pairs. Choose difficulty and enter your name!</p>
+    </header>
+
+    <section class="game-grid">
+      <div class="card game-card right-card">
+        <label class="field">
+          <span class="label-text">Your name</span>
+          <input id="playerName" type="text" maxlength="32" placeholder="Your name..." />
+        </label>
+
+        <div class="difficulty-selector">
+          <button id="easyBtn" class="btn btn-ghost active">Easy (4x4)</button>
+          <button id="hardBtn" class="btn btn-ghost">Hard (6x6)</button>
+        </div>
+
+        <div id="gameBoard" class="memory-board">
+          <!-- Cards will be generated here -->
+        </div>
+
+        <p id="hint" class="muted hint">Click cards to flip them!</p>
+        <p id="result" class="result"></p>
+
+        <div class="actions">
+          <button id="restartBtn" class="btn btn-ghost">Restart</button>
+          <a class="btn btn-primary" href="leaderboard.html">View Leaderboard</a>
+        </div>
+      </div>
+
+      <aside class="card right-card">
+        <h3 class="card-title">Leaderboard</h3>
+        <ol id="leaderList" class="leader-list">
+          <!-- Populated by JS -->
+        </ol>
+        <p class="muted small">Top scores saved to localStorage.</p>
+      </aside>
+    </section>
+
+    <footer class="foot muted">Test your memory skills!</footer>
+  </main>
+
+  <script src="static/js/memory.js"></script>
+  <script>
+  function populateLeaderboard() {
+    const scores = JSON.parse(localStorage.getItem('scores') || '[]');
+    const memoryScores = scores.filter(s => s.game === 'memory').sort((a,b) => b.score - a.score).slice(0, 10);
+    const list = document.getElementById('leaderList');
+    list.innerHTML = memoryScores.map(s => `<li><strong>${s.name}</strong><span class="muted"> — ${s.score} pts</span></li>`).join('');
+  }
+  populateLeaderboard();
+  </script>
+</body>
+</html>

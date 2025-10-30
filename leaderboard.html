@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Leaderboard — Mini Game Arcade</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body class="pb-body leaderboard-page">
+  <main class="wrap">
+    <header class="hero small">
+      <h1 class="brand">Leaderboard</h1>
+      <p class="lead">Top 10 scores for each game</p>
+    </header>
+
+    <section class="leaderboard-section">
+      <div class="game-tabs">
+        <button class="tab-btn active" data-game="reaction">Reaction Speed</button>
+        <button class="tab-btn" data-game="memory">Memory Matching</button>
+        <button class="tab-btn" data-game="puzzle">Puzzle Slider</button>
+        <button class="tab-btn" data-game="trivia">Trivia Quiz</button>
+      </div>
+
+      <div class="card">
+        <ol id="leaderList" class="leader-list">
+          <!-- Populated by JS -->
+        </ol>
+        <p id="noScores" class="muted" style="display:none;">No scores yet — be the first!</p>
+
+        <div class="actions">
+          <button class="btn btn-ghost" onclick="openInfoModal()">How it Works</button>
+          <a href="index.html" class="btn btn-ghost">Back Home</a>
+          <a href="game1.html" class="btn btn-primary">Play Reaction</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Info Modal -->
+    <div id="infoModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>How Scores Work</h2>
+        <p>Scores are calculated differently for each game:</p>
+        <ul>
+          <li><strong>Reaction Speed:</strong> Faster clicks get higher points</li>
+          <li><strong>Memory Matching:</strong> Fewer attempts and faster time = higher score</li>
+          <li><strong>Puzzle Slider:</strong> Fewer moves and faster time = higher score</li>
+          <li><strong>Trivia Quiz:</strong> Correct answers with speed bonuses</li>
+        </ul>
+        <button class="btn btn-primary" onclick="closeInfoModal()">Got it!</button>
+      </div>
+    </div>
+
+    <footer class="foot muted">Playful Bright — built for friends</footer>
+  </main>
+
+  <script>
+  let currentGame = 'reaction';
+
+  function populateLeaderboard(game) {
+    const scores = JSON.parse(localStorage.getItem('scores') || '[]');
+    const gameScores = scores.filter(s => s.game === game).sort((a,b) => b.score - a.score).slice(0, 10);
+    const list = document.getElementById('leaderList');
+    const noScores = document.getElementById('noScores');
+    if (gameScores.length > 0) {
+      list.innerHTML = gameScores.map(s => `<li><strong>${s.name}</strong><span class="muted"> — ${s.score} pts</span></li>`).join('');
+      noScores.style.display = 'none';
+    } else {
+      list.innerHTML = '';
+      noScores.style.display = 'block';
+    }
+  }
+
+  // Tab switching
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentGame = btn.dataset.game;
+      populateLeaderboard(currentGame);
+    });
+  });
+
+  populateLeaderboard(currentGame);
+
+  // Modal functions
+  function openInfoModal() {
+    document.getElementById('infoModal').style.display = 'block';
+  }
+
+  function closeInfoModal() {
+    document.getElementById('infoModal').style.display = 'none';
+  }
+
+  // Close modal on click outside or close button
+  document.querySelector('#infoModal .close').onclick = closeInfoModal;
+  window.onclick = function(event) {
+    const modal = document.getElementById('infoModal');
+    if (event.target == document.getElementById('infoModal')) {
+      closeInfoModal();
+    }
+  }
+  </script>
+</body>
+</html>

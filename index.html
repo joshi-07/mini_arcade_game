@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mini Game Arcade — Playful Bright</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body class="pb-body index-page">
+  <main class="wrap">
+    <header class="hero">
+      <h1 class="brand">Mini Game Arcade</h1>
+      <p class="lead">Tiny games. Big laughs. Compete with friends.</p>
+    </header>
+
+    <section class="game-grid">
+      <article class="card pulse">
+        <h2 class="card-title">Reaction Speed</h2>
+        <p class="muted">Fast reflexes win the leaderboard. One quick game to start!</p>
+        <div class="cta-row-vertical">
+          <a class="btn btn-primary btn-full" href="game1.html">Play Now</a>
+          <a class="btn btn-ghost btn-full" href="leaderboard.html">Leaderboard</a>
+        </div>
+      </article>
+
+      <article class="card pulse">
+        <h2 class="card-title">Memory Matching</h2>
+        <p class="muted">Flip cards to find pairs. Test your memory skills!</p>
+        <div class="cta-row-vertical">
+          <a class="btn btn-primary btn-full" href="memory.html">Play Now</a>
+          <a class="btn btn-ghost btn-full" href="leaderboard.html">Leaderboard</a>
+        </div>
+      </article>
+
+      <article class="card pulse">
+        <h2 class="card-title">Puzzle Slider</h2>
+        <p class="muted">Slide tiles to complete the picture. Challenge your logic!</p>
+        <div class="cta-row-vertical">
+          <a class="btn btn-primary btn-full" href="puzzle.html">Play Now</a>
+          <a class="btn btn-ghost btn-full" href="leaderboard.html">Leaderboard</a>
+        </div>
+      </article>
+
+      <article class="card pulse">
+        <h2 class="card-title">Trivia Quiz</h2>
+        <p class="muted">Answer questions quickly. Show off your knowledge!</p>
+        <div class="cta-row-vertical">
+          <a class="btn btn-primary btn-full" href="trivia.html">Play Now</a>
+          <a class="btn btn-ghost btn-full" href="leaderboard.html">Leaderboard</a>
+        </div>
+      </article>
+    </section>
+
+  <footer class="foot muted">Made for friends • Playful Bright theme</footer>
+  </main>
+
+  <!-- Welcome Modal -->
+  <div id="welcomeModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Welcome to Mini Game Arcade!</h2>
+      <p>Choose from our fun games: Reaction Speed, Memory Matching, Puzzle Slider, or Trivia Quiz. Compete with friends on the leaderboard!</p>
+      <button class="btn btn-primary" onclick="closeModal()">Let's Play!</button>
+    </div>
+  </div>
+
+  <script>
+  function closeModal() {
+    document.getElementById('welcomeModal').style.display = 'none';
+  }
+
+  // Show modal on load if not seen before
+  if (!localStorage.getItem('welcomeShown')) {
+    setTimeout(() => {
+      document.getElementById('welcomeModal').style.display = 'block';
+    }, 1000);
+    localStorage.setItem('welcomeShown', 'true');
+  }
+
+  // Close modal on click outside or close button
+  document.querySelector('.close').onclick = closeModal;
+  window.onclick = function(event) {
+    if (event.target == document.getElementById('welcomeModal')) {
+      closeModal();
+    }
+  }
+  </script>
+</body>
+</html>
