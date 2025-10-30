@@ -107,8 +107,12 @@ function setDifficulty(size) {
   gameSize = size;
   easyBtn.classList.toggle('active', size === 16);
   hardBtn.classList.toggle('active', size === 36);
-  if (gameActive) {
+  // Start the game immediately if name is entered
+  if (nameInput.value.trim() !== '') {
     startGame();
+  } else {
+    alert('Please enter your name to start the game!');
+    hint.textContent = 'Please enter your name to start the game!';
   }
 }
 
@@ -118,4 +122,6 @@ easyBtn.addEventListener('click', () => setDifficulty(16));
 hardBtn.addEventListener('click', () => setDifficulty(36));
 
 // Initialize
-setDifficulty(16);
+gameSize = 16;
+easyBtn.classList.add('active');
+hardBtn.classList.remove('active');
