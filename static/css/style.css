@@ -4,9 +4,12 @@
   --bg2: #e8fbff;
   --card: rgba(255,255,255,0.7);
   --glass: rgba(255,255,255,0.5);
-  --accent: #4dd0e1;
-  --accent2: #ff7aa2;
-  --accent3: #ffd166;
+  --accent: #4dd0e1; /* Cyan for primary */
+  --accent2: #ff7aa2; /* Pink for secondary */
+  --accent3: #ffd166; /* Yellow for tertiary */
+  --accent4: #b28bff; /* Purple for highlights */
+  --accent5: #4CAF50; /* Green for success */
+  --accent6: #f44336; /* Red for errors */
   --text: #0f172a;
   --muted: #6b7280;
   --radius: 18px;
@@ -110,7 +113,7 @@ body.pb-body.leaderboard-page {
 .game-box{
   width:100%;
   height:200px;
-  background: linear-gradient(180deg,#ffb3b3,#ffb3b3);
+  background: linear-gradient(180deg, var(--accent6), var(--accent2)); /* Red to Pink gradient for reaction game */
   border-radius: var(--radius);
   display:flex;
   align-items:center;
@@ -136,7 +139,7 @@ body.pb-body.leaderboard-page {
 }
 .memory-card{
   aspect-ratio:1;
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent), var(--accent4)); /* Cyan to Purple gradient */
   border-radius: var(--radius);
   display:flex;
   align-items:center;
@@ -146,9 +149,10 @@ body.pb-body.leaderboard-page {
   font-weight:700;
   color:white;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
-.memory-card.flipped{ background: var(--accent2); }
-.memory-card.matched{ background: var(--accent3); opacity:0.7; }
+.memory-card.flipped{ background: linear-gradient(135deg, var(--accent2), var(--accent3)); /* Pink to Yellow gradient */ }
+.memory-card.matched{ background: linear-gradient(135deg, var(--accent5), var(--accent)); /* Green to Cyan gradient */ opacity:0.8; }
 
 /* puzzle game */
 .puzzle-container{ margin:20px 0; }
@@ -160,10 +164,11 @@ body.pb-body.leaderboard-page {
   background: var(--text);
   border-radius: var(--radius);
   overflow:hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 .puzzle-tile{
   aspect-ratio:1;
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent3), var(--accent2)); /* Yellow to Pink gradient */
   display:flex;
   align-items:center;
   justify-content:center;
@@ -172,8 +177,10 @@ body.pb-body.leaderboard-page {
   font-weight:700;
   color:white;
   transition: all 0.2s ease;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
 }
-.puzzle-tile.empty{ background: transparent; cursor:default; }
+.puzzle-tile:hover{ transform: scale(1.05); }
+.puzzle-tile.empty{ background: transparent; cursor:default; box-shadow: none; }
 
 /* trivia game */
 .question-container{ margin:20px 0; }
@@ -181,17 +188,18 @@ body.pb-body.leaderboard-page {
 .answers{ display:flex; flex-direction:column; gap:10px; }
 .answer-btn{
   padding:12px;
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent4), var(--accent)); /* Purple to Cyan gradient */
   color:white;
   border:none;
   border-radius: var(--radius);
   cursor:pointer;
   font-size:16px;
   transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-.answer-btn:hover{ background: var(--accent2); }
-.answer-btn.correct{ background: green; }
-.answer-btn.wrong{ background: red; }
+.answer-btn:hover{ background: linear-gradient(135deg, var(--accent), var(--accent2)); transform: translateY(-1px); }
+.answer-btn.correct{ background: linear-gradient(135deg, var(--accent5), #66BB6A); /* Green gradient */ }
+.answer-btn.wrong{ background: linear-gradient(135deg, var(--accent6), #EF5350); /* Red gradient */ }
 
 /* leaderboard */
 .leader-list{ list-style:none; padding:0; margin:0; }
