@@ -14,6 +14,8 @@ let waiting = false;
 let startTime = 0;
 let timeoutId = null;
 let counting = false;
+let currentScore = 0;
+let bestScore = localStorage.getItem('reactionBest') || 0;
 
 // Ensure canvas fills screen
 function resizeCanvas() {
@@ -108,12 +110,7 @@ function startRound() {
 }
 
 // click handler
-box.addEventListener('click', () => {
-  if (nameInput.value.trim() === '') {
-    alert('Please enter your name to play!');
-    hint.innerText = 'Please enter your name to play!';
-    return;
-  }
+  box.addEventListener('click', () => {
 
   if (counting && !waiting) {
     // clicked too early during countdown
@@ -151,6 +148,12 @@ box.addEventListener('click', () => {
     const score = Math.max(0, Math.round(1000 - timeMs));
 
     animateResult(timeSec, score);
+
+    // Update progress bar
+    const progressFill = document.getElementById('scoreProgress');
+    const maxScore = 1000;
+    const progressPercent = Math.min((score / maxScore) * 100, 100);
+    progressFill.style.width = `${progressPercent}%`;
 
     // submit score
     const name = nameInput.value.trim() || 'Anonymous';

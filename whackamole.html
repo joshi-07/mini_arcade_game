@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Puzzle Slider — Mini Game Arcade</title>
+  <title>Whack-a-Mole — Mini Game Arcade</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body class="pb-body game-page">
   <main class="wrap">
     <header class="hero small">
-      <h1 class="brand">Puzzle Slider</h1>
-      <p class="lead">Slide tiles to complete the picture. Enter your name and start!</p>
+      <h1 class="brand">Whack-a-Mole</h1>
+      <p class="lead">Click the moles as they appear. Score points for hits, lose for misses. Enter your name and start!</p>
     </header>
 
     <section class="game-grid">
@@ -21,18 +21,17 @@
           <input id="playerName" type="text" maxlength="32" placeholder="Your name..." />
         </label>
 
-        <div id="puzzleContainer" class="puzzle-container">
-          <div id="puzzleBoard" class="puzzle-board">
-            <!-- Tiles will be generated here -->
-          </div>
+        <div id="gameBoard" class="whack-board">
+          <!-- Holes will be generated here -->
         </div>
 
-        <p id="hint" class="muted hint">Click tiles to slide them!</p>
+        <p id="hint" class="muted hint">Click the moles when they pop up!</p>
         <p id="result" class="result"></p>
         <div class="progress-bar"><div class="progress-fill" id="scoreProgress"></div></div>
 
         <div class="actions">
-          <button id="restartBtn" class="btn btn-ghost">New Puzzle</button>
+          <button id="startBtn" class="btn btn-primary">Start Game</button>
+          <button id="restartBtn" class="btn btn-ghost" style="display:none;">Restart</button>
           <a class="btn btn-primary" href="leaderboard.html">View Leaderboard</a>
         </div>
       </div>
@@ -46,16 +45,16 @@
       </aside>
     </section>
 
-    <footer class="foot muted">Challenge your logic!</footer>
+    <footer class="foot muted">Whack as many moles as possible!</footer>
   </main>
 
-  <script src="static/js/puzzle.js"></script>
+  <script src="static/js/whackamole.js"></script>
   <script>
   function populateLeaderboard() {
     const scores = JSON.parse(localStorage.getItem('scores') || '[]');
-    const puzzleScores = scores.filter(s => s.game === 'puzzle').sort((a,b) => b.score - a.score).slice(0, 10);
+    const whackScores = scores.filter(s => s.game === 'whackamole').sort((a,b) => b.score - a.score).slice(0, 10);
     const list = document.getElementById('leaderList');
-    list.innerHTML = puzzleScores.map(s => `<li><strong>${s.name}</strong><span class="muted"> — ${s.score} pts</span></li>`).join('');
+    list.innerHTML = whackScores.map(s => `<li><strong>${s.name}</strong><span class="muted"> — ${s.score} pts</span></li>`).join('');
   }
   populateLeaderboard();
   </script>

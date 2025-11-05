@@ -14,6 +14,8 @@ let attempts = 0;
 let startTime = 0;
 let gameSize = 16; // 4x4 default
 let gameActive = false;
+let touchStartX = 0;
+let touchStartY = 0;
 
 // Card symbols
 const symbols = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐸', '🐵', '🐔', '🐧', '🐦'];
@@ -75,6 +77,12 @@ function checkMatch() {
 }
 
 function startGame() {
+  if (nameInput.value.trim() === '') {
+    alert('Please enter your name to start the game!');
+    hint.textContent = 'Please enter your name to start the game!';
+    return;
+  }
+
   gameActive = true;
   matchedPairs = 0;
   attempts = 0;
@@ -91,6 +99,12 @@ function endGame() {
   const score = Math.max(0, Math.round(1000 - (attempts * 10) - (timeTaken * 5)));
 
   result.textContent = `Completed in ${timeTaken.toFixed(1)}s with ${attempts} attempts! Score: ${score}`;
+
+  // Update progress bar
+  const progressFill = document.getElementById('scoreProgress');
+  const maxScore = 1000;
+  const progressPercent = Math.min((score / maxScore) * 100, 100);
+  progressFill.style.width = `${progressPercent}%`;
 
   // Submit score
   const name = nameInput.value.trim() || 'Anonymous';
@@ -115,6 +129,30 @@ function setDifficulty(size) {
     hint.textContent = 'Please enter your name to start the game!';
   }
 }
+
+// Touch event handlers for swipe gestures (swipe to flip cards)
+board.addEventListener('touchstart', (e) => {
+  if (!gameActive) return;
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+});
+
+board.addEventListener('touchend', (e) => {
+  if (!gameActive) return;
+  const touchEndX = e.changedTouches[0].clientX;
+  const touchEndY = e.changedTouches[0].clientY;
+  const deltaX = touchEndX - touchStartX;
+  const deltaY = touchEndY - touchStartY;
+
+  // Determine swipe direction and find the card under the swipe
+  const minSwipeDistance = 30;
+  if (Math.abs(deltaX) > minSwipeDistance || Math.abs(deltaY) > minSwipeDistance) {
+    const target = e.target;
+    if (target.classList.contains('memory-card') && !target.classList.contains('flipped') && !target.classList.contains('matched')) {
+      flipCard.call(target);
+    }
+  }
+});
 
 // Event listeners
 restartBtn.addEventListener('click', startGame);
