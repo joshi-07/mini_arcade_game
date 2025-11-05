@@ -6,6 +6,9 @@ const result = document.getElementById('result');
 const nameInput = document.getElementById('playerName');
 const startBtn = document.getElementById('startBtn');
 
+let currentFocusIndex = -1;
+let answerButtons = [];
+
 let currentQuestion = 0;
 let score = 0;
 let questions = [];
@@ -55,14 +58,22 @@ function displayQuestion() {
   const q = questions[currentQuestion];
   questionEl.textContent = q.question;
   answersEl.innerHTML = '';
+  answerButtons = [];
 
   q.answers.forEach((answer, index) => {
     const btn = document.createElement('button');
     btn.className = 'answer-btn';
     btn.textContent = answer;
+    btn.setAttribute('tabindex', '0');
+    btn.setAttribute('aria-label', `Answer option ${index + 1}: ${answer}`);
     btn.addEventListener('click', () => selectAnswer(index));
+    btn.addEventListener('keydown', handleKeyDown);
     answersEl.appendChild(btn);
+    answerButtons.push(btn);
   });
+
+  // Reset focus
+  currentFocusIndex = -1;
 
   startTime = Date.now();
 }
@@ -94,12 +105,6 @@ function selectAnswer(selectedIndex) {
 }
 
 function startGame() {
-  if (nameInput.value.trim() === '') {
-    alert('Please enter your name to start the quiz!');
-    hint.textContent = 'Please enter your name to start the quiz!';
-    return;
-  }
-
   gameActive = true;
   currentQuestion = 0;
   score = 0;
@@ -116,6 +121,12 @@ function endGame() {
   result.textContent = `Quiz completed! Final score: ${score}`;
   hint.textContent = 'Great job! Press Start Quiz to play again.';
 
+  // Update progress bar
+  const progressFill = document.getElementById('scoreProgress');
+  const maxScore = 500; // Assuming 5 questions, max 100 each
+  const progressPercent = Math.min((score / maxScore) * 100, 100);
+  progressFill.style.width = `${progressPercent}%`;
+
   // Submit score
   const name = nameInput.value.trim() || 'Anonymous';
   let scores = JSON.parse(localStorage.getItem('scores') || '[]');
@@ -126,6 +137,53 @@ function endGame() {
 
   startBtn.textContent = 'Start Quiz';
   startBtn.disabled = false;
+}
+
+// Keyboard navigation handler
+function handleKeyDown(event) {
+  if (!gameActive) return;
+
+  switch (event.key) {
+    case 'ArrowDown':
+    case 'ArrowRight':
+      event.preventDefault();
+      navigateFocus(1);
+      break;
+    case 'ArrowUp':
+    case 'ArrowLeft':
+      event.preventDefault();
+      navigateFocus(-1);
+      break;
+    case 'Enter':
+    case ' ':
+      event.preventDefault();
+      if (currentFocusIndex >= 0 && currentFocusIndex < answerButtons.length) {
+        const selectedIndex = currentFocusIndex;
+        selectAnswer(selectedIndex);
+      }
+      break;
+  }
+}
+
+function navigateFocus(direction) {
+  if (answerButtons.length === 0) return;
+
+  // Remove current focus
+  if (currentFocusIndex >= 0 && currentFocusIndex < answerButtons.length) {
+    answerButtons[currentFocusIndex].classList.remove('focused');
+  }
+
+  // Calculate new focus index
+  currentFocusIndex += direction;
+  if (currentFocusIndex < 0) {
+    currentFocusIndex = answerButtons.length - 1;
+  } else if (currentFocusIndex >= answerButtons.length) {
+    currentFocusIndex = 0;
+  }
+
+  // Apply new focus
+  answerButtons[currentFocusIndex].classList.add('focused');
+  answerButtons[currentFocusIndex].focus();
 }
 
 // Event listeners

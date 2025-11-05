@@ -3,88 +3,272 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mini Game Arcade — Playful Bright</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <title>Neo Arcade — Futuristic Game Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="static/css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </head>
-<body class="pb-body index-page">
-  <main class="wrap">
-    <header class="hero">
-      <h1 class="brand">Mini Game Arcade</h1>
-      <p class="lead">Tiny games. Big laughs. Compete with friends.</p>
-    </header>
-
-    <section class="game-grid">
-      <article class="card pulse">
-        <h2 class="card-title">Reaction Speed</h2>
-        <p class="muted">Fast reflexes win the leaderboard. One quick game to start!</p>
-        <div class="cta-row-vertical">
-          <a class="btn btn-primary btn-full" href="game1.html">Play Now</a>
-          <a class="btn btn-ghost btn-full" href="leaderboard.html">Leaderboard</a>
-        </div>
-      </article>
-
-      <article class="card pulse">
-        <h2 class="card-title">Memory Matching</h2>
-        <p class="muted">Flip cards to find pairs. Test your memory skills!</p>
-        <div class="cta-row-vertical">
-          <a class="btn btn-primary btn-full" href="memory.html">Play Now</a>
-          <a class="btn btn-ghost btn-full" href="leaderboard.html">Leaderboard</a>
-        </div>
-      </article>
-
-      <article class="card pulse">
-        <h2 class="card-title">Puzzle Slider</h2>
-        <p class="muted">Slide tiles to complete the picture. Challenge your logic!</p>
-        <div class="cta-row-vertical">
-          <a class="btn btn-primary btn-full" href="puzzle.html">Play Now</a>
-          <a class="btn btn-ghost btn-full" href="leaderboard.html">Leaderboard</a>
-        </div>
-      </article>
-
-      <article class="card pulse">
-        <h2 class="card-title">Trivia Quiz</h2>
-        <p class="muted">Answer questions quickly. Show off your knowledge!</p>
-        <div class="cta-row-vertical">
-          <a class="btn btn-primary btn-full" href="trivia.html">Play Now</a>
-          <a class="btn btn-ghost btn-full" href="leaderboard.html">Leaderboard</a>
-        </div>
-      </article>
-    </section>
-
-  <footer class="foot muted">Made for friends • Playful Bright theme</footer>
-  </main>
-
-  <!-- Welcome Modal -->
-  <div id="welcomeModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Welcome to Mini Game Arcade!</h2>
-      <p>Choose from our fun games: Reaction Speed, Memory Matching, Puzzle Slider, or Trivia Quiz. Compete with friends on the leaderboard!</p>
-      <button class="btn btn-primary" onclick="closeModal()">Let's Play!</button>
+<body class="neo-body">
+  <!-- Loader -->
+  <div id="loader" class="loader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <h2 class="loader-text">INITIALIZING NEO ARCADE</h2>
+      <div class="loader-progress"><div class="loader-bar"></div></div>
     </div>
   </div>
 
+  <!-- Main Container -->
+  <div id="mainContainer" class="main-container">
+    <!-- Background Elements -->
+    <div id="particles-js" class="particles-bg"></div>
+    <div class="grid-overlay"></div>
+    <div class="gradient-bg"></div>
+
+    <!-- Header -->
+    <header class="neo-header">
+      <div class="header-content">
+        <h1 class="brand-neo">NEO ARCADE</h1>
+        <div class="header-controls">
+          <button id="themeToggle" class="theme-toggle" title="Toggle Theme">
+            <span class="theme-icon">🌙</span>
+          </button>
+          <button id="soundToggle" class="sound-toggle" title="Toggle Sound">
+            <span class="sound-icon">🔊</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="neo-nav">
+      <button class="nav-btn active" data-section="home">HOME</button>
+      <button class="nav-btn" data-section="games">GAMES</button>
+      <button class="nav-btn" data-section="leaderboard">LEADERBOARD</button>
+    </nav>
+
+    <!-- Sections -->
+    <main class="sections-container">
+      <!-- Home Section -->
+      <section id="homeSection" class="section active">
+        <div class="hero-content">
+          <h2 class="hero-title">WELCOME TO THE FUTURE</h2>
+          <p class="hero-subtitle">Experience gaming like never before with our collection of futuristic mini-games</p>
+          <button class="cta-btn" onclick="switchSection('games')">ENTER ARCADE</button>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number">7</div>
+            <div class="stat-label">GAMES</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="totalPlayers">0</div>
+            <div class="stat-label">PLAYERS</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" id="totalScores">0</div>
+            <div class="stat-label">SCORES</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Games Section -->
+      <section id="gamesSection" class="section">
+        <div class="games-grid">
+          <div class="game-card" data-game="reaction">
+            <div class="game-icon">
+              <div class="icon-bg">⚡</div>
+            </div>
+            <h3 class="game-title">REACTION SPEED</h3>
+            <p class="game-desc">Test your reflexes with lightning-fast challenges</p>
+            <button class="play-btn" onclick="window.location.href='game1.html'">PLAY NOW</button>
+          </div>
+
+          <div class="game-card" data-game="memory">
+            <div class="game-icon">
+              <div class="icon-bg">🧠</div>
+            </div>
+            <h3 class="game-title">MEMORY MATRIX</h3>
+            <p class="game-desc">Challenge your neural pathways with pattern matching</p>
+            <button class="play-btn" onclick="window.location.href='memory.html'">PLAY NOW</button>
+          </div>
+
+          <div class="game-card" data-game="puzzle">
+            <div class="game-icon">
+              <div class="icon-bg">🧩</div>
+            </div>
+            <h3 class="game-title">SLIDER PUZZLE</h3>
+            <p class="game-desc">Rearrange the matrix to achieve perfect order</p>
+            <button class="play-btn" onclick="window.location.href='puzzle.html'">PLAY NOW</button>
+          </div>
+
+          <div class="game-card" data-game="trivia">
+            <div class="game-icon">
+              <div class="icon-bg">🧠</div>
+            </div>
+            <h3 class="game-title">TRIVIA ENGINE</h3>
+            <p class="game-desc">Deploy your knowledge database against the clock</p>
+            <button class="play-btn" onclick="window.location.href='trivia.html'">PLAY NOW</button>
+          </div>
+
+          <div class="game-card" data-game="snake">
+            <div class="game-icon">
+              <div class="icon-bg">🐍</div>
+            </div>
+            <h3 class="game-title">NEURAL SNAKE</h3>
+            <p class="game-desc">Guide your digital serpent through the void</p>
+            <button class="play-btn" onclick="window.location.href='snake.html'">PLAY NOW</button>
+          </div>
+
+          <div class="game-card" data-game="whackamole">
+            <div class="game-icon">
+              <div class="icon-bg">🔨</div>
+            </div>
+            <h3 class="game-title">MOLE ELIMINATOR</h3>
+            <p class="game-desc">Target and neutralize emerging threats</p>
+            <button class="play-btn" onclick="window.location.href='whackamole.html'">PLAY NOW</button>
+          </div>
+
+          <div class="game-card" data-game="2048">
+            <div class="game-icon">
+              <div class="icon-bg">🔢</div>
+            </div>
+            <h3 class="game-title">POWER GRID</h3>
+            <p class="game-desc">Merge energy cells to achieve maximum output</p>
+            <button class="play-btn" onclick="window.location.href='2048.html'">PLAY NOW</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Game Play Section -->
+      <section id="gameSection" class="section">
+        <div class="game-container">
+          <div class="game-header">
+            <h2 id="currentGameTitle" class="game-title-display">GAME TITLE</h2>
+            <div class="game-controls">
+              <button class="back-btn" onclick="switchSection('games')">← BACK</button>
+            </div>
+          </div>
+
+          <div class="game-content">
+            <div class="game-main">
+              <div class="player-input">
+                <input type="text" id="playerName" placeholder="ENTER YOUR NAME" maxlength="32" />
+              </div>
+
+              <!-- Game-specific content will be inserted here -->
+              <div id="gameArea" class="game-area"></div>
+
+              <div class="game-info">
+                <div id="gameHint" class="game-hint">Select a game to begin</div>
+                <div id="gameResult" class="game-result"></div>
+                <div class="progress-container">
+                  <div class="progress-bar">
+                    <div id="scoreProgress" class="progress-fill"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="game-actions">
+                <button id="startGameBtn" class="action-btn primary">START GAME</button>
+                <button id="restartGameBtn" class="action-btn secondary" style="display:none;">RESTART</button>
+              </div>
+            </div>
+
+            <div class="game-sidebar">
+              <div class="leaderboard-card">
+                <h3 class="sidebar-title">LEADERBOARD</h3>
+                <ol id="gameLeaderboard" class="leader-list">
+                  <!-- Populated by JS -->
+                </ol>
+                <p id="noScoresMsg" class="no-scores">No scores yet — be the first!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Leaderboard Section -->
+      <section id="leaderboardSection" class="section">
+        <div class="leaderboard-container">
+          <h2 class="section-title">GLOBAL LEADERBOARD</h2>
+          <div class="leaderboard-tabs">
+            <button class="tab-btn active" data-game="reaction">REACTION</button>
+            <button class="tab-btn" data-game="memory">MEMORY</button>
+            <button class="tab-btn" data-game="puzzle">PUZZLE</button>
+            <button class="tab-btn" data-game="trivia">TRIVIA</button>
+            <button class="tab-btn" data-game="snake">SNAKE</button>
+            <button class="tab-btn" data-game="whackamole">WHACK</button>
+            <button class="tab-btn" data-game="2048">2048</button>
+          </div>
+          <div class="leaderboard-content">
+            <ol id="globalLeaderboard" class="leader-list">
+              <!-- Populated by JS -->
+            </ol>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="neo-footer">
+      <p>&copy; 2024 NEO ARCADE — BUILT FOR THE FUTURE</p>
+    </footer>
+  </div>
+
+  <!-- Modals -->
+  <div id="welcomeModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>WELCOME TO NEO ARCADE</h2>
+      <p>Experience gaming reimagined. Choose from our collection of futuristic mini-games and compete on the global leaderboard!</p>
+      <button class="modal-btn" onclick="closeModal()">ENTER THE MATRIX</button>
+    </div>
+  </div>
+
+  <div id="gameOverModal" class="modal">
+    <div class="modal-content">
+      <h2 id="gameOverTitle">GAME COMPLETE</h2>
+      <p id="gameOverMessage">Your score has been recorded!</p>
+      <div class="modal-actions">
+        <button class="modal-btn" onclick="closeModal()">CONTINUE</button>
+        <button class="modal-btn secondary" onclick="switchSection('leaderboard')">VIEW SCORES</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Context for Sound Effects -->
   <script>
-  function closeModal() {
-    document.getElementById('welcomeModal').style.display = 'none';
-  }
-
-  // Show modal on load if not seen before
-  if (!localStorage.getItem('welcomeShown')) {
-    setTimeout(() => {
-      document.getElementById('welcomeModal').style.display = 'block';
-    }, 1000);
-    localStorage.setItem('welcomeShown', 'true');
-  }
-
-  // Close modal on click outside or close button
-  document.querySelector('.close').onclick = closeModal;
-  window.onclick = function(event) {
-    if (event.target == document.getElementById('welcomeModal')) {
-      closeModal();
+    // Initialize Audio Context
+    let audioContext;
+    try {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    } catch(e) {
+      console.warn('Web Audio API not supported');
     }
-  }
+
+    // Sound effect functions
+    function playSound(frequency, duration, type = 'sine') {
+      if (!audioContext || !soundEnabled) return;
+
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+      oscillator.type = type;
+
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + duration);
+    }
   </script>
+
+  <script src="static/js/script.js"></script>
 </body>
 </html>
