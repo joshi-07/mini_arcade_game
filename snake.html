@@ -25,6 +25,15 @@
           <!-- Snake game canvas or grid will be here -->
         </div>
 
+        <div id="virtualControls" class="virtual-controls">
+          <button id="upBtn" class="control-btn">↑</button>
+          <div class="control-row">
+            <button id="leftBtn" class="control-btn">←</button>
+            <button id="rightBtn" class="control-btn">→</button>
+          </div>
+          <button id="downBtn" class="control-btn">↓</button>
+        </div>
+
         <p id="hint" class="muted hint">Use arrow keys or WASD to move!</p>
         <p id="result" class="result"></p>
         <div class="progress-bar"><div class="progress-fill" id="scoreProgress"></div></div>
@@ -47,6 +56,34 @@
 
     <footer class="foot muted">Classic snake game — grow as long as possible!</footer>
   </main>
+
+  <!-- Audio elements for sound effects -->
+  <audio id="eatSound" preload="auto">
+    <source src="static/audio/eat.mp3" type="audio/mpeg">
+    <source src="static/audio/eat.wav" type="audio/wav">
+  </audio>
+  <audio id="gameOverSound" preload="auto">
+    <source src="static/audio/gameover.mp3" type="audio/mpeg">
+    <source src="static/audio/gameover.wav" type="audio/wav">
+  </audio>
+  <audio id="bgMusic" loop preload="auto">
+    <source src="static/audio/background.mp3" type="audio/mpeg">
+    <source src="static/audio/background.wav" type="audio/wav">
+  </audio>
+
+  <!-- Audio elements for sound effects -->
+  <audio id="eatSound" preload="auto">
+    <source src="static/audio/eat.mp3" type="audio/mpeg">
+    <source src="static/audio/eat.wav" type="audio/wav">
+  </audio>
+  <audio id="gameOverSound" preload="auto">
+    <source src="static/audio/gameover.mp3" type="audio/mpeg">
+    <source src="static/audio/gameover.wav" type="audio/wav">
+  </audio>
+  <audio id="bgMusic" loop preload="auto">
+    <source src="static/audio/bg.mp3" type="audio/mpeg">
+    <source src="static/audio/bg.wav" type="audio/wav">
+  </audio>
 
   <script src="static/js/snake.js"></script>
   <script>

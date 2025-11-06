@@ -10,7 +10,6 @@ const nameInput = document.getElementById('playerName');
 const restartBtn = document.getElementById('restartBtn');
 const confettiCanvas = document.getElementById('confettiCanvas');
 
-let waiting = false;
 let startTime = 0;
 let timeoutId = null;
 let counting = false;
@@ -71,7 +70,7 @@ function setBoxState(color, text) {
   boxText.innerText = text;
 }
 
-// a smooth 3-2-1 animated countdown before random wait
+// a smooth 3-2-1 animated countdown then immediate green
 function startRound() {
   // clear previous
   clearTimeout(timeoutId);
@@ -79,7 +78,6 @@ function startRound() {
   hint.innerText = 'Get ready...';
   setBoxState('linear-gradient(180deg,#ffd0d6,#ffb3b3)', 'Wait...');
   box.style.cursor = 'default';
-  waiting = false;
   counting = true;
 
   let count = 3;
@@ -91,20 +89,10 @@ function startRound() {
     } else {
       clearInterval(countInterval);
       countdownEl.innerText = '';
-      waiting = true;
-      setBoxState('linear-gradient(180deg,#ffb3b3,#ffb3b3)', 'Wait for green...');
-      hint.innerText = 'Wait for green, then click!';
+      startTime = performance.now();
+      setBoxState('linear-gradient(180deg,#4CAF50,#45a049)', 'CLICK NOW!');
+      hint.innerText = 'Click as fast as you can!';
       box.style.cursor = 'pointer';
-
-      // random delay between 1-4 seconds
-      const delay = Math.random() * 3000 + 1000;
-      timeoutId = setTimeout(() => {
-        if (waiting) {
-          startTime = performance.now();
-          setBoxState('linear-gradient(180deg,#4CAF50,#45a049)', 'CLICK NOW!');
-          hint.innerText = 'Click as fast as you can!';
-        }
-      }, delay);
     }
   }, 1000);
 }

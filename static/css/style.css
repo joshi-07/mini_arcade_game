@@ -1313,12 +1313,86 @@ body.neo-body {
 .snake-board {
   width: 400px;
   height: 400px;
-  background: var(--bg-secondary);
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(0, 255, 255, 0.1) 100%);
   border: 2px solid var(--border-color);
   border-radius: var(--radius);
   margin: 0 auto 20px;
   position: relative;
   overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+.snake-cell {
+  background: linear-gradient(45deg, #4CAF50, #66BB6A);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+  transition: all 0.1s ease;
+  animation: snakeGlow 2s ease-in-out infinite alternate;
+}
+
+.food-cell {
+  background: radial-gradient(circle, #FF5722, #D84315);
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(255, 87, 34, 0.6);
+  animation: foodPulse 1.5s ease-in-out infinite;
+}
+
+.virtual-controls {
+  display: none;
+  grid-template-rows: auto auto auto;
+  gap: 10px;
+  justify-items: center;
+  margin: 20px auto;
+  max-width: 200px;
+}
+
+.control-row {
+  display: flex;
+  gap: 10px;
+}
+
+.control-btn {
+  width: 50px;
+  height: 50px;
+  background: var(--bg-glass);
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.control-btn:hover {
+  background: var(--bg-glass-hover);
+  border-color: var(--neon-cyan);
+  box-shadow: 0 6px 20px rgba(0, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.control-btn:active {
+  transform: scale(0.95);
+}
+
+@keyframes snakeGlow {
+  0% { box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3); }
+  100% { box-shadow: 0 2px 12px rgba(76, 175, 80, 0.6); }
+}
+
+@keyframes foodPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+@media (max-width: 768px) {
+  .virtual-controls {
+    display: grid;
+  }
 }
 
 .whack-board {
