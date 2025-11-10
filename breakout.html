@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Snake — Mini Game Arcade</title>
+  <title>Breakout — Mini Game Arcade</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body class="pb-body game-page">
   <main class="wrap">
     <header class="hero small">
-      <h1 class="brand">Snake</h1>
-      <p class="lead">Eat food to grow longer. Avoid walls and yourself. Enter your name and start!</p>
+      <h1 class="brand">Breakout</h1>
+      <p class="lead">Break all bricks with the ball. Don't let it fall! Enter your name and start!</p>
     </header>
 
     <section class="game-grid">
@@ -21,20 +21,18 @@
           <input id="playerName" type="text" maxlength="32" placeholder="Your name..." />
         </label>
 
-        <div id="gameBoard" class="snake-board">
-          <!-- Snake game canvas or grid will be here -->
+        <div id="gameBoard" class="breakout-board">
+          <!-- Breakout game canvas will be here -->
         </div>
 
-        <div id="virtualControls" class="virtual-controls">
-          <button id="upBtn" class="control-btn">↑</button>
+        <div class="virtual-controls">
           <div class="control-row">
-            <button id="leftBtn" class="control-btn">←</button>
-            <button id="rightBtn" class="control-btn">→</button>
+            <button class="control-btn" id="leftBtn">←</button>
+            <button class="control-btn" id="rightBtn">→</button>
           </div>
-          <button id="downBtn" class="control-btn">↓</button>
         </div>
 
-        <p id="hint" class="muted hint">Use arrow keys or WASD to move!</p>
+        <p id="hint" class="muted hint">Use arrow keys, mouse, or touch to move the paddle!</p>
         <p id="result" class="result"></p>
         <div class="progress-bar"><div class="progress-fill" id="scoreProgress"></div></div>
 
@@ -54,30 +52,16 @@
       </aside>
     </section>
 
-    <footer class="foot muted">Classic snake game — grow as long as possible!</footer>
+    <footer class="foot muted">Classic breakout game — destroy all bricks!</footer>
   </main>
 
-  <!-- Audio elements for sound effects -->
-  <audio id="eatSound" preload="auto">
-    <source src="static/audio/eat.mp3" type="audio/mpeg">
-    <source src="static/audio/eat.wav" type="audio/wav">
-  </audio>
-  <audio id="gameOverSound" preload="auto">
-    <source src="static/audio/gameover.mp3" type="audio/mpeg">
-    <source src="static/audio/gameover.wav" type="audio/wav">
-  </audio>
-  <audio id="bgMusic" loop preload="auto">
-    <source src="static/audio/background.mp3" type="audio/mpeg">
-    <source src="static/audio/background.wav" type="audio/wav">
-  </audio>
-
-  <script src="static/js/snake.js"></script>
+  <script src="static/js/breakout.js"></script>
   <script>
   function populateLeaderboard() {
     const scores = JSON.parse(localStorage.getItem('scores') || '[]');
-    const snakeScores = scores.filter(s => s.game === 'snake').sort((a,b) => b.score - a.score).slice(0, 10);
+    const breakoutScores = scores.filter(s => s.game === 'breakout').sort((a,b) => b.score - a.score).slice(0, 10);
     const list = document.getElementById('leaderList');
-    list.innerHTML = snakeScores.map(s => `<li><strong>${s.name}</strong><span class="muted"> — ${s.score} pts</span></li>`).join('');
+    list.innerHTML = breakoutScores.map(s => `<li><strong>${s.name}</strong><span class="muted"> — ${s.score} pts</span></li>`).join('');
   }
   populateLeaderboard();
   </script>

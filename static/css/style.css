@@ -1129,6 +1129,51 @@ body.neo-body {
   border-top: 1px solid var(--border-color);
 }
 
+/* Breakout Game Styles */
+.breakout-board {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+/* Game Card Hover Animations */
+.game-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile Virtual Controls Enhancement */
+@media (max-width: 768px) {
+  .virtual-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+  }
+
+  .control-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .control-btn:hover {
+    background: var(--neon-cyan);
+    color: var(--bg-primary);
+  }
+}
+
 /* Game-specific styles */
 .difficulty-selector {
   display: flex;
