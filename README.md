@@ -21,7 +21,7 @@ A fun, mobile-friendly static web application featuring multiple mini-games with
 
 ## Technologies Used
 
-- **Frontend**: HTML, CSS, JavaScript
+- **Frontend**: HTML,  CSS, JavaScript
 - **Styling**: Custom CSS with animations
 - **Storage**: Browser localStorage for scores
 - **Deployment**: Static hosting (GitHub Pages, Netlify, etc.)
