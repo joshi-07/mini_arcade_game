@@ -1,4 +1,4 @@
-# Mini Game Arcade
+ # Mini Game Arcade
 
 A fun, mobile-friendly static web application featuring multiple mini-games with leaderboards and animations.
 
